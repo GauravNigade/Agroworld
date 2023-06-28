@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace 'com.project.agroworldapp'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.project.agroworldapp"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 6
         versionName "3.0.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -88,5 +88,9 @@ dependencies {
 
     //For Razorpay checkout SDK
     implementation 'com.razorpay:checkout:1.6.26'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.10"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.10"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10"
 
 }

@@ -135,50 +135,6 @@ public class HomeFragment extends Fragment implements OnProductListener, OnVehic
         });
     }
 
-    private void callApiService(Double lat, Double lon) {
-        binding.weatherProgressbar.setVisibility(View.VISIBLE);
-        agroViewModel.performWeatherRequest(lat, lon, BuildConfig.API_KEY);
-        agroViewModel.observeWeatherResponseLivedata.observe(getViewLifecycleOwner(), weatherResponseResource -> {
-            switch (weatherResponseResource.status) {
-                case ERROR:
-                    binding.weatherProgressbar.setVisibility(View.GONE);
-                    binding.weatherLayout.setVisibility(View.GONE);
-                    binding.tvWeatherError.setVisibility(View.VISIBLE);
-                    binding.tvWeatherError.setText(weatherResponseResource.message);
-                    break;
-                case LOADING:
-                    break;
-                case SUCCESS:
-                    binding.weatherProgressbar.setVisibility(View.GONE);
-                    if (weatherResponseResource.data != null) {
-                        updateUI(weatherResponseResource.data);
-                    } else {
-                        binding.weatherLayout.setVisibility(View.GONE);
-                        binding.tvWeatherError.setVisibility(View.VISIBLE);
-                        binding.tvWeatherError.setText(weatherResponseResource.message);
-                    }
-            }
-        });
-
-    }
-
-    private void updateUI(WeatherResponse response) {
-        String temp = String.format("%.0f", (response.getMain().getTemp() + 0.01) - 273.15);
-        String date = new SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format(new Date(response.getDt() * 1000L));
-        String status = response.getWeather().get(0).getDescription();
-        String wind = response.getWind().getSpeed().toString();
-        String humidity = String.valueOf(response.getMain().getHumidity());
-        String iconUrl = "http://openweathermap.org/img/wn/" + response.getWeather().get(0).getIcon() + "@4x.png";
-        Glide.with(binding.ivWeatherIconHome).load(iconUrl).placeholder(R.drawable.weather).dontAnimate().into(binding.ivWeatherIconHome);
-        binding.tvWeatherDate.setText(date);
-        binding.tvWeatherHumidity.setText("Humidity:" + humidity);
-        binding.tvWeatherStatus.setText(status);
-        binding.tvWeatherTemp.setText(temp + "°C");
-        binding.tvWeatherWind.setText("Wind:" + wind);
-        binding.tvWeatherCity.setText(locality);
-    }
-
-
     private void getProductListFromFirebase() {
         LiveData<Resource<List<ProductModel>>> observeProductFirebaseLivedata;
         boolean selectedAppLanguage = Constants.selectedLanguage(getContext());
@@ -253,34 +209,6 @@ public class HomeFragment extends Fragment implements OnProductListener, OnVehic
     }
 
 
-    private void getLastLocation() {
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void onSuccess(Location location) {
-                    if (location != null) {
-                        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-                        List<Address> addresses;
-                        try {
-                            addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                            Double lat = addresses.get(0).getLatitude();
-                            Double lon = addresses.get(0).getLongitude();
-                            locality = addresses.get(0).getLocality();
-                            latitude = lat;
-                            longitude = lon;
-                            callApiService(lat, lon);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            });
-        } else {
-            askPermission();
-        }
-    }
-
     private void askPermission() {
         requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Constants.GPS_REQUEST_CODE);
 
@@ -288,7 +216,6 @@ public class HomeFragment extends Fragment implements OnProductListener, OnVehic
 
     private void checkPermissionCallApi() {
         if (Permissions.checkConnection(getContext()) && Permissions.isGpsEnable(getContext())) {
-            getLastLocation();
             getProductListFromFirebase();
             getVehicleListFromFirebase();
         }
@@ -299,7 +226,6 @@ public class HomeFragment extends Fragment implements OnProductListener, OnVehic
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == Constants.GPS_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getLastLocation();
             } else {
                 Constants.showToast(requireContext(), getString(R.string.provide_permission));
             }

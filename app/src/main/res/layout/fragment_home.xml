@@ -10,7 +10,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:fillViewport="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,163 +21,25 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/weatherCard"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="0dp"
                     android:layout_marginTop="10dp"
                     android:background="#6800BFFF"
                     app:cardCornerRadius="15sp"
                     app:cardElevation="15sp"
+                    app:layout_constraintBottom_toTopOf="@+id/categoryHorizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
+                    <WebView
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:scaleType="fitXY"
+                        android:layout_height="match_parent"
                         android:src="@drawable/couldy_sky1"
                         tools:ignore="ContentDescription" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/tvWeatherError"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:fontFamily="@font/fredoka_one"
-                            android:gravity="center"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textSize="15sp"
-                            android:visibility="gone" />
-
-                        <RelativeLayout
-                            android:id="@+id/weatherLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true">
-
-                            <ImageView
-                                android:id="@+id/ivWeatherIconHome"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_above="@id/tvWeatherStatus"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentTop="true"
-                                android:layout_marginStart="20dp"
-                                android:layout_marginTop="@dimen/dp_10"
-                                android:scaleType="centerCrop"
-                                tools:ignore="ContentDescription" />
-
-                            <TextView
-                                android:id="@+id/tvWeatherStatus"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentBottom="true"
-                                android:layout_marginStart="@dimen/dp_20"
-                                android:layout_marginTop="@dimen/dp_10"
-                                android:layout_marginBottom="@dimen/dp_10"
-                                android:layout_toStartOf="@id/tvWeatherDate"
-                                android:fontFamily="@font/fredoka_one"
-                                android:gravity="center"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="15sp" />
-
-
-                            <TextView
-                                android:id="@+id/tvWeatherTemp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/tvWeatherCity"
-                                android:layout_toStartOf="@id/layoutWeatherDT"
-                                android:layout_toEndOf="@id/ivWeatherIconHome"
-                                android:fontFamily="@font/days_one"
-                                android:gravity="center"
-                                android:textAlignment="center"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="40sp"
-                                android:textStyle="bold" />
-
-
-                            <TextView
-                                android:id="@+id/tvWeatherDate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentBottom="true"
-                                android:layout_marginBottom="@dimen/dp_10"
-                                android:layout_toStartOf="@id/layoutWeatherDT"
-                                android:layout_toEndOf="@id/ivWeatherIconHome"
-                                android:fontFamily="@font/fredoka_one"
-                                android:gravity="center"
-                                android:textAlignment="center"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                android:id="@+id/tvWeatherCity"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_margin="@dimen/dp_10"
-                                android:fontFamily="@font/fredoka_one"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="22sp"
-                                android:textStyle="bold" />
-
-                            <LinearLayout
-                                android:id="@+id/layoutWeatherDT"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/tvWeatherCity"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentBottom="true"
-                                android:layout_centerVertical="true"
-                                android:layout_marginEnd="@dimen/dp_10"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/tvWeatherWind"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="@dimen/dp_10"
-                                    android:fontFamily="@font/poppins_medium"
-                                    android:textAlignment="textEnd"
-                                    android:textColor="@color/colorPrimaryDark"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    android:id="@+id/tvWeatherHumidity"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="@dimen/dp_10"
-                                    android:textAlignment="textEnd"
-                                    android:textColor="@color/colorPrimaryDark"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-
-
-                        </RelativeLayout>
-
-                        <ProgressBar
-                            android:id="@+id/weatherProgressbar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:progressBackgroundTint="@color/colorPrimaryDark"
-                            android:progressTint="@color/colorPrimaryDark"
-                            android:visibility="gone" />
-
-                    </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/articlesTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -186,8 +48,10 @@
                     android:textColor="@color/fontColor"
                     android:textSize="21sp"
                     android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/weatherCard" />
+                    tools:layout_editor_absoluteY="346dp" />-->
 
                 <HorizontalScrollView
                     android:id="@+id/categoryHorizontal"
@@ -195,17 +59,28 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="7dp"
                     android:scrollbars="none"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/articlesTitle">
+                    app:layout_constraintVertical_bias="0.883">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:paddingTop="10dp"
+                        tools:ignore="MissingConstraints">
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/crdCrops"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
                             android:layout_marginHorizontal="10dp"
                             android:layout_marginVertical="10dp">
 
@@ -366,6 +241,8 @@
 
 
                     </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </HorizontalScrollView>
 
                 <TextView
@@ -377,6 +254,7 @@
                     android:textColor="@color/fontColor"
                     android:textSize="21sp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/categoryHorizontal" />
 
@@ -385,6 +263,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvDashboardVehicle" />
@@ -398,6 +277,7 @@
                     android:textColor="@color/fontColor"
                     android:textSize="21sp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/transport_recycler_view" />
 
@@ -406,6 +286,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvDashboardProduct" />

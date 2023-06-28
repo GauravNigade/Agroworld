@@ -141,7 +141,7 @@ public class UserProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_logout:
-                logoutUser();
+               // logoutUser();
                 return true;
             case R.id.adminHindiLang:
                 setAppLocale(this, "hi");
@@ -162,7 +162,7 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void logoutUser() {
+   /* private void logoutUser() {
         Constants.logoutAlertMessage(UserProfileActivity.this, auth);
-    }
+    }*/
 }

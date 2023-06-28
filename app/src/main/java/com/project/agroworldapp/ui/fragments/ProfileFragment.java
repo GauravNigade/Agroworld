@@ -27,7 +27,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.project.agroworldapp.BuildConfig;
 import com.project.agroworldapp.R;
-import com.project.agroworldapp.chatbot.ChatBotActivity;
 import com.project.agroworldapp.databinding.FragmentProfileBinding;
 import com.project.agroworldapp.db.FarmerModel;
 import com.project.agroworldapp.db.PreferenceHelper;
@@ -58,6 +57,7 @@ public class ProfileFragment extends Fragment implements OnItemClickListener {
         // Inflate the layout for this fragment
         dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
         return dataBinding.getRoot();
+
     }
 
     @Override
@@ -119,12 +119,9 @@ public class ProfileFragment extends Fragment implements OnItemClickListener {
             popupMenu.setOnMenuItemClickListener(menuItem -> {
                 // Toast message on menu item clicked
                 switch (menuItem.getItemId()) {
-                    case R.id.mnAboutUs:
-                        openUri(Constants.ABOUT_US_PAGE);
-                        return true;
                     case R.id.mnContactUs:
                         Intent intent1 = new Intent(Intent.ACTION_DIAL);
-                        intent1.setData(Uri.parse("tel:" + "+918087477015"));
+                        intent1.setData(Uri.parse("tel:" + "+917249523827"));
                         startActivity(intent1);
                         return true;
                     case R.id.mnPrivacyPolicy:
@@ -144,14 +141,6 @@ public class ProfileFragment extends Fragment implements OnItemClickListener {
             Intent intent = new Intent(getContext(), AddTaskActivity.class);
             intent.putExtra("maxIDCount", maxIDCount);
             startActivityForResult(intent, REQUEST_CODE);
-        });
-
-        dataBinding.ivLogout.setOnClickListener(v -> {
-            Constants.logoutAlertMessage(getActivity(), auth);
-        });
-
-        dataBinding.ivQuickHelp.setOnClickListener(v -> {
-            startActivityForResult(new Intent(getContext(), ChatBotActivity.class), Constants.REQUEST_CODE);
         });
 
         dataBinding.btnTransHistory.setOnClickListener(v -> {

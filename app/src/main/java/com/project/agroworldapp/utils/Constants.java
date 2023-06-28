@@ -92,7 +92,7 @@ public class Constants {
         return contact.length() == 10;
     }
 
-    public static void logoutAlertMessage(Activity context, FirebaseAuth auth) {
+    /*public static void logoutAlertMessage(Activity context, FirebaseAuth auth) {
         new AlertDialog.Builder(context).setTitle(context.getString(R.string.logout)).setIcon(R.drawable.app_icon4).setMessage(context.getString(R.string.logout_alert_message)).setCancelable(true).setNegativeButton(android.R.string.cancel, (dialog, which) -> {
             dialog.dismiss();
         }).setPositiveButton(android.R.string.yes, (arg0, arg1) -> {
@@ -105,7 +105,7 @@ public class Constants {
             context.startActivityForResult(intent, Constants.LOGOUT_REQUEST_CODE);
             context.finish();
         }).create().show();
-    }
+    }*/
 
     public static String plainStringEmail(String email) {
         String userName = email.replaceAll("\\.", "");

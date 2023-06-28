@@ -58,7 +58,7 @@ public class NewsFragment extends Fragment {
         settings.setSupportMultipleWindows(true);
         settings.setBuiltInZoomControls(false);
         settings.setLoadWithOverviewMode(true);
-        settings.setAppCacheEnabled(false);
+       // settings.setAppCacheEnabled(false);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setAllowFileAccess(true);
         settings.setAllowFileAccessFromFileURLs(true);
@@ -67,7 +67,7 @@ public class NewsFragment extends Fragment {
         settings.setUserAgentString("Android");
         settings.setDefaultZoom(WebSettings.ZoomDensity.CLOSE);
         settings.setUseWideViewPort(true);
-        settings.setAppCacheEnabled(true);
+       // settings.setAppCacheEnabled(true);
         webView.clearCache(true);
 
         if (selectedLanguage) {

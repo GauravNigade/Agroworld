@@ -49,7 +49,7 @@ public class SignUpActivity extends AppCompatActivity {
         progressBar = new CustomMultiColorProgressBar(this, getString(R.string.loader_message));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        loginWithGoogle();
+      //  loginWithGoogle();
 
         binding.btnSignup.setOnClickListener(v -> {
             String email = binding.etEmailSignUp.getText().toString();
@@ -105,19 +105,21 @@ public class SignUpActivity extends AppCompatActivity {
                 finish();
             } else {
                 progressBar.hideProgressBar();
-                // If sign in fails, display a message to the user.
+                startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
+
+               /* // If sign in fails, display a message to the user.
                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                Toast.makeText(SignUpActivity.this, "Authentication failed\n" + task.getException(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "Authentication failed\n" + task.getException(), Toast.LENGTH_SHORT).show();*/
             }
         });
     }
 
-    private void loginWithGoogle() {
+    /*private void loginWithGoogle() {
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-    }
+    }*/
 
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();

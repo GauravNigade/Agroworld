@@ -44,7 +44,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
         progressBar = new CustomMultiColorProgressBar(this, getString(R.string.loader_message));
-        loginWithGoogle();
+      //  loginWithGoogle();
         initViews();
     }
 
@@ -56,7 +56,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         binding.fabAdminContact.setOnClickListener(SignInActivity.this);
     }
 
-    private void loginWithGoogle() {
+   /* private void loginWithGoogle() {
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -65,7 +65,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-    }
+    }*/
 
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -152,7 +152,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     progressBar.hideProgressBar();
                     // Sign in success, update UI with the signed-in user's information
                     Constants.showToast(SignInActivity.this, "Login Successful");
-                    FirebaseUser user = mAuth.getCurrentUser();
+                        FirebaseUser user = mAuth.getCurrentUser();
                     if (user != null) {
                         Constants.identifyUser(user, SignInActivity.this);
                     } else {

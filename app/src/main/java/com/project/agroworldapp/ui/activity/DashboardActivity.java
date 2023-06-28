@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.project.agroworldapp.BuildConfig;
 import com.project.agroworldapp.R;
 import com.project.agroworldapp.db.PreferenceHelper;
 import com.project.agroworldapp.ui.adapter.FragmentAdapter;
@@ -21,7 +20,6 @@ import com.project.agroworldapp.ui.fragments.HomeFragment;
 import com.project.agroworldapp.ui.fragments.NewsFragment;
 import com.project.agroworldapp.ui.fragments.ProfileFragment;
 import com.project.agroworldapp.ui.fragments.ShoppingFragment;
-import com.project.agroworldapp.ui.fragments.TransportFragment;
 import com.project.agroworldapp.utils.Constants;
 import com.project.agroworldapp.utils.Permissions;
 
@@ -61,7 +59,6 @@ public class DashboardActivity extends AppCompatActivity {
         fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
         fragments.add(new ShoppingFragment());
-        fragments.add(new TransportFragment());
         fragments.add(new EducationFragment());
         fragments.add(new NewsFragment());
         fragments.add(new ProfileFragment());
@@ -73,17 +70,17 @@ public class DashboardActivity extends AppCompatActivity {
 
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_baseline_home_24);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_baseline_shop_two_24);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_baseline_emoji_transportation_24);
-        tabLayout.getTabAt(3).setIcon(R.drawable.ic_baseline_menu_book_24);
-        tabLayout.getTabAt(4).setIcon(R.drawable.ic_baseline_newspaper_24);
-        tabLayout.getTabAt(5).setIcon(R.drawable.ic_baseline_person_24);
+      //  tabLayout.getTabAt(2).setIcon(R.drawable.ic_baseline_emoji_transportation_24);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_baseline_menu_book_24);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_baseline_newspaper_24);
+        tabLayout.getTabAt(4).setIcon(R.drawable.ic_baseline_person_24);
 
         tabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_IN);
         tabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_IN);
+      //  tabLayout.getTabAt(2).getIcon().setColorFilter(getResources().getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_IN);
         tabLayout.getTabAt(2).getIcon().setColorFilter(getResources().getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_IN);
         tabLayout.getTabAt(3).getIcon().setColorFilter(getResources().getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_IN);
         tabLayout.getTabAt(4).getIcon().setColorFilter(getResources().getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_IN);
-        tabLayout.getTabAt(5).getIcon().setColorFilter(getResources().getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_IN);
 
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#5D1F91"));
         tabLayout.setSelectedTabIndicatorHeight((int) (3 * getResources().getDisplayMetrics().density));
