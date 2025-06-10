@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">कृषिदुनिया</string>
+    <string name="app_name">कृषिमित्र</string>
     <!-- Strings used for fragments for navigation -->
     <string name="quote1">"किसी भी किसान के लिए सर्वश्रेष्ठ मार्गदर्शक और सहायक। एक ही स्थान पर विभिन्न सुविधाएँ प्रदान करता है!"</string>
     <string name="register">पंजीकरण</string>

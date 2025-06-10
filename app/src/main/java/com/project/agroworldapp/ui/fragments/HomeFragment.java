@@ -10,9 +10,14 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,7 +63,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class HomeFragment extends Fragment implements OnProductListener, OnVehicleCallClick {
+public class HomeFragment extends Fragment {
 
     private final List<ProductModel> productModelArrayList = new ArrayList<>(5);
     private final ArrayList<VehicleModel> vehicleItemList = new ArrayList<>(5);
@@ -89,51 +94,90 @@ public class HomeFragment extends Fragment implements OnProductListener, OnVehic
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initViews(view);
-
-        binding.crdFruits.setOnClickListener(v -> {
-            startActivityForResult(new Intent(requireContext(), FruitsActivity.class), Constants.REQUEST_CODE);
-        });
-
-        binding.crdCrops.setOnClickListener(v -> {
-            startActivityForResult(new Intent(requireContext(), CropsActivity.class), Constants.REQUEST_CODE);
-        });
-
-        binding.crdFlowers.setOnClickListener(v -> {
-            startActivityForResult(new Intent(requireContext(), FlowersActivity.class), Constants.REQUEST_CODE);
-        });
-
-        binding.crdHowToExpand.setOnClickListener(v -> {
-            startActivityForResult(new Intent(requireContext(), HowToExpandActivity.class), Constants.REQUEST_CODE);
-        });
-
-        binding.crdDiseases.setOnClickListener(v -> {
-            startActivityForResult(new Intent(requireContext(), DiseasesActivity.class), Constants.REQUEST_CODE);
-        });
 
     }
 
-    private void initViews(View view) {
-        binding.weatherCard.setOnClickListener(view1 -> {
-            if (latitude != 0.0 && longitude != 0.0) {
-                Intent intent = new Intent(getContext(), WeatherActivity.class);
-                intent.putExtra("latitude", latitude);
-                intent.putExtra("longitude", longitude);
-                startActivity(intent);
-            } else {
-                Constants.showToast(getContext(), getString(R.string.failed_to_fetch_location));
-            }
-        });
+
+
+        @Override
+        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
+            WebView webView = view.findViewById(R.id.weather_webview);
+            WebSettings settings = webView.getSettings();
+            settings.setBuiltInZoomControls(true);
+            settings.setJavaScriptEnabled(true);
+            settings.setSupportMultipleWindows(true);
+            settings.setLoadWithOverviewMode(true);
+            // settings.setAppCacheEnabled(false);
+            settings.setJavaScriptCanOpenWindowsAutomatically(true);
+            settings.setAllowFileAccess(true);
+            settings.setAllowFileAccessFromFileURLs(true);
+            settings.setAllowUniversalAccessFromFileURLs(true);
+            settings.setDomStorageEnabled(true);
+            settings.setUserAgentString("Android");
+            settings.setDefaultZoom(WebSettings.ZoomDensity.CLOSE);
+            settings.setUseWideViewPort(true);
+            // settings.setAppCacheEnabled(true);
+            webView.clearCache(true);
+            webView.setVerticalScrollbarOverlay(true);
+
+            webView.loadUrl("https://www.accuweather.com/");
+
+            webView.setOnKeyListener((v, keyCode, event) -> {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == MotionEvent.ACTION_UP && webView.canGoBack()) {
+                    webView.goBack();
+                    return true;
+                }
+                return false;
+            });
+
+
     }
+
+  /*  private void setupwebview(){
+        binding.weatherWebview.setWebViewClient(new WebViewClient()); // Navigation stays inside WebView
+        WebSettings webSettings = binding.weatherWebview.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setLoadWithOverviewMode(true);
+        WebView.setWebContentsDebuggingEnabled(true);
+        webSettings.setSupportZoom(true);
+        webSettings.setSupportMultipleWindows(true);
+        webSettings.setBuiltInZoomControls(false);
+        webSettings.setLoadWithOverviewMode(true);
+        // settings.setAppCacheEnabled(false);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setAllowFileAccessFromFileURLs(true);
+        webSettings.setAllowUniversalAccessFromFileURLs(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setUserAgentString("Android");
+        webSettings.setDefaultZoom(WebSettings.ZoomDensity.CLOSE);
+        webSettings.setUseWideViewPort(true);
+        // settings.setAppCacheEnabled(true);
+        binding.weatherWebview.clearCache(true);
+
+
+        binding.weatherWebview.loadUrl("https://www.accuweather.com/");
+    }*/
+   /* private void setupWebView() {
+        WebView wv = binding.weatherWebview;
+
+        WebSettings ws = wv.getSettings();
+        ws.setJavaScriptEnabled(true);
+        ws.setDomStorageEnabled(true);
+        ws.setUseWideViewPort(true);
+        ws.setLoadWithOverviewMode(true);
+        wv.setVerticalScrollBarEnabled(true);
+        wv.loadUrl("https://www.accuweather.com/");
+    }
+*/
 
     private void getProductListFromFirebase() {
         LiveData<Resource<List<ProductModel>>> observeProductFirebaseLivedata;
@@ -148,7 +192,6 @@ public class HomeFragment extends Fragment implements OnProductListener, OnVehic
         observeProductFirebaseLivedata.observe(getViewLifecycleOwner(), productModelResource -> {
             switch (productModelResource.status) {
                 case ERROR:
-                    binding.shoppingRecyclerView.setVisibility(View.GONE);
                     break;
                 case LOADING:
                     break;
@@ -156,29 +199,21 @@ public class HomeFragment extends Fragment implements OnProductListener, OnVehic
                     if (productModelResource.data != null) {
                         productModelArrayList.clear();
                         productModelArrayList.addAll(productModelResource.data);
-                        setRecyclerView();
                     } else {
-                        binding.shoppingRecyclerView.setVisibility(View.GONE);
-                        binding.tvDashboardProduct.setVisibility(View.GONE);
+
                     }
                     break;
             }
         });
     }
 
-    private void setRecyclerView() {
-        ProductAdapter productAdapter = new ProductAdapter(productModelArrayList, HomeFragment.this, 1);
-        binding.shoppingRecyclerView.setAdapter(productAdapter);
-        binding.shoppingRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
-        binding.shoppingRecyclerView.setHasFixedSize(true);
-    }
+
 
     private void getVehicleListFromFirebase() {
         agroViewModel.getVehicleModelLivedata();
         agroViewModel.observeTransportResourceLiveData.observe(getViewLifecycleOwner(), vehicleModelResource -> {
             switch (vehicleModelResource.status) {
                 case ERROR:
-                    binding.shoppingRecyclerView.setVisibility(View.GONE);
                     break;
                 case LOADING:
                     break;
@@ -186,21 +221,12 @@ public class HomeFragment extends Fragment implements OnProductListener, OnVehic
                     if (vehicleModelResource.data != null) {
                         vehicleItemList.clear();
                         vehicleItemList.addAll(vehicleModelResource.data);
-                        setVehicleRecyclerView();
                     } else {
-                        binding.transportRecyclerView.setVisibility(View.GONE);
-                        binding.tvDashboardVehicle.setVisibility(View.GONE);
+
                     }
                     break;
             }
         });
-    }
-
-    private void setVehicleRecyclerView() {
-        VehicleAdapter vehicleAdapter = new VehicleAdapter(vehicleItemList, HomeFragment.this, 1);
-        binding.transportRecyclerView.setAdapter(vehicleAdapter);
-        binding.transportRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.transportRecyclerView.setHasFixedSize(true);
     }
 
     public void initializeAgroWorldViewModel() {
@@ -240,17 +266,4 @@ public class HomeFragment extends Fragment implements OnProductListener, OnVehic
         }
     }
 
-    @Override
-    public void onProductClick(ProductModel productModel) {
-        Intent intent = new Intent(requireContext(), ProductDetailActivity.class);
-        intent.putExtra("productModel", productModel);
-        startActivity(intent);
-    }
-
-    @Override
-    public void callVehicleOwner(VehicleModel vehicleModel) {
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:" + vehicleModel.getContact()));
-        startActivity(intent);
-    }
 }

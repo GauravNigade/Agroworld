@@ -3,6 +3,7 @@ package com.project.agroworldapp.weather.model.weatherlist;
 import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
+import com.project.agroworldapp.weather.model.weather_data.Coord;
 
 import java.io.Serializable;
 

@@ -143,9 +143,6 @@ public class ProfileFragment extends Fragment implements OnItemClickListener {
             startActivityForResult(intent, REQUEST_CODE);
         });
 
-        dataBinding.btnTransHistory.setOnClickListener(v -> {
-            startActivityForResult(new Intent(getContext(), PaymentHistoryActivity.class), Constants.REQUEST_CODE);
-        });
     }
 
     private void openUri(String uri) {

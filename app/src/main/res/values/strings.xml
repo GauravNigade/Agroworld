@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AgroWorld</string>
+    <string name="app_name">FarmMate</string>
     <!-- Strings used for fragments for navigation -->
 
     <string name="quote1">"Best Guide and Helper for any Farmer. Provides various features at one place!"</string>
